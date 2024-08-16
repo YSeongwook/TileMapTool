@@ -89,6 +89,11 @@ namespace EnumTypes
         FirebaseSignIn,
         EmailSignIn,
     }
+
+    public enum TileEvent
+    {
+        SelectTileNode
+    }
     
     public class EnumTypes : MonoBehaviour
     {
