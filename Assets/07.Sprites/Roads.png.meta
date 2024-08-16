@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Road_cross
+      name: Road_Cross
       rect:
         serializedVersion: 2
         x: 186
@@ -180,7 +180,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Road_corner
+      name: Road_Corner
       rect:
         serializedVersion: 2
         x: 90
@@ -201,7 +201,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Roads_end2
+      name: Road_End
       rect:
         serializedVersion: 2
         x: 97
@@ -232,12 +232,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Road_Corner: 1210937206
+      Road_Cross: -1446428360
+      Road_End: -1493912242
       Road_Straight: -2062186635
       Road_T: 33532268
-      Road_corner: 1210937206
-      Road_cross: -1446428360
       Road_end: -1955178436
-      Roads_end2: -1493912242
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

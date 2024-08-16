@@ -10,11 +10,11 @@ public class CreatePuzzleMapBase : MonoBehaviour
     private const int Puzzle6X6 = 36;
     private const int Puzzle7X7 = 49;
 
-    private RectTransform rectTransform;
+    private RectTransform _rectTransform;
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
+        _rectTransform = GetComponent<RectTransform>();
     }
 
     public void OnCreate3X3Puzzle()
@@ -94,6 +94,6 @@ public class CreatePuzzleMapBase : MonoBehaviour
                 break;
         }
 
-        rectTransform.anchoredPosition = ScreenPos;
+        _rectTransform.anchoredPosition = ScreenPos;
     }
 }
