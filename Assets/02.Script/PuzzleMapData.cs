@@ -1,13 +1,11 @@
+using System.Collections.Generic;
 using EnumTypes;
 using EventLibrary;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class PuzzleMapData : Singleton<PuzzleMapData>
 {
-    private TileNode SelectTile;
-    private List<Tile> TileNodes = new List<Tile>();
+    private TileNode _selectTile;
+    private List<Tile> _tileNodes = new List<Tile>();
 
     protected new void Awake()
     {
@@ -23,8 +21,6 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
 
     private void OnClickSelectTile(TileNode tileNode)
     {
-        SelectTile = tileNode;
-        Debug.Log(SelectTile.instanID);
+        _selectTile = tileNode;
     }
-    
 }
