@@ -92,7 +92,8 @@ namespace EnumTypes
 
     public enum TileEvent
     {
-        SelectTileNode
+        SelectTileNode,
+        ChangedSelectTileNodeInfo
     }
     
     public class EnumTypes : MonoBehaviour

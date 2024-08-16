@@ -3,6 +3,7 @@ using EventLibrary;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PuzzleMapData : Singleton<PuzzleMapData>
 {
@@ -13,18 +14,24 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
     {
         base.Awake();
 
+        SelectTile = null;
         EventManager<TileEvent>.StartListening<TileNode>(TileEvent.SelectTileNode, OnClickSelectTile);
+        EventManager<TileEvent>.StartListening<Tile>(TileEvent.ChangedSelectTileNodeInfo, ChangedSelectTileInfo);
     }
 
     private void OnDestroy()
     {
         EventManager<TileEvent>.StopListening<TileNode>(TileEvent.SelectTileNode, OnClickSelectTile);
+        EventManager<TileEvent>.StopListening<Tile>(TileEvent.ChangedSelectTileNodeInfo, ChangedSelectTileInfo);
     }
 
     private void OnClickSelectTile(TileNode tileNode)
     {
         SelectTile = tileNode;
-        Debug.Log(SelectTile.instanID);
     }
-    
+
+    private void ChangedSelectTileInfo(Tile tileInfo)
+    {
+        SelectTile.ChangedTileInfo(tileInfo);
+    }
 }
