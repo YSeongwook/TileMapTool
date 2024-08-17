@@ -7,6 +7,7 @@ using UnityEngine;
 public class TileRotation : MonoBehaviour
 {
     private int RotateValue = 0;
+    private bool isGimmickTile;
 
     private void Awake()
     {
@@ -25,13 +26,32 @@ public class TileRotation : MonoBehaviour
 
     public void OnClickRightRotate()
     {
-        RotateValue = (RotateValue + 1) % 4;
-        EventManager<TileEvent>.TriggerEvent(TileEvent.RotationSelectTileNodeInfo, RotateValue);
+        float rotateValue = 0;
+        if (isGimmickTile)
+        {
+            rotateValue = 1;
+        }
+        else
+        {
+            RotateValue = (RotateValue + 1) % 4;
+            rotateValue = RotateValue;
+        }
+        EventManager<TileEvent>.TriggerEvent(TileEvent.RotationSelectTileNodeInfo, rotateValue, isGimmickTile);
     }
 
     public void OnClickLeftRotate()
     {
-        RotateValue = (RotateValue + 3) % 4;
-        EventManager<TileEvent>.TriggerEvent(TileEvent.RotationSelectTileNodeInfo, RotateValue);
-    }
+        float rotateValue = 0;
+        if (isGimmickTile)
+        {
+            rotateValue = -1;
+        }
+        else
+        {
+            RotateValue = (RotateValue + 3) % 4;
+            rotateValue = RotateValue;
+        }
+        EventManager<TileEvent>.TriggerEvent(TileEvent.RotationSelectTileNodeInfo, rotateValue, isGimmickTile);
+    }        
+    
 }

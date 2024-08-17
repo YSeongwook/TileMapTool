@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangedRoadTileType : MonoBehaviour
+public class ChangedGimmickTile : MonoBehaviour
 {
     [SerializeField] private Sprite tileSprite;
-    [SerializeField] private TileType tileType;
+    [SerializeField] private GimmickType gimmickType;   
     [SerializeField] private int tileShape;
 
     private Image _tileImage;
@@ -23,8 +23,8 @@ public class ChangedRoadTileType : MonoBehaviour
     {
         Tile newTile = new Tile();
         newTile.Sprite = tileSprite;
-        newTile.Type = tileType;
-        newTile.GimmickType = GimmickType.None;
+        newTile.Type = TileType.Gimmick;
+        newTile.GimmickType = gimmickType;
         newTile.TileShape = tileShape;
 
         EventManager<TileEvent>.TriggerEvent(TileEvent.ChangedSelectTileInfo, newTile);

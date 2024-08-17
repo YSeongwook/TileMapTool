@@ -93,9 +93,10 @@ namespace EnumTypes
     public enum TileEvent
     {
         SelectTileNode,
-        ChangedSelectTileNodeInfo,
+        ChangedSelectTileInfo,
         RotationSelectTileNodeInfo,
-        GetTileRotateValue
+        GetTileRotateValue,
+        DeleteTIleAttribute
     }
     
     public class EnumTypes : MonoBehaviour

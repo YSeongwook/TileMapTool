@@ -25,7 +25,7 @@ public struct Tile
     public TileType Type;
     public GimmickType GimmickType;
     public int RotateValue;
-    public int TileShape;
+    public int TileShape;   // -1. None, 0. คำ, 1. L, 2. T, 3. +, 4. StopPoint
 }
 
 public class TileNode : MonoBehaviour
@@ -69,6 +69,7 @@ public class TileNode : MonoBehaviour
         _imageGimmick.enabled = false;
 
         _backgroundOutline.enabled = false;
+        _tile.TileShape = -1;
     }
 
     public void OnClickThisNode()
@@ -106,20 +107,49 @@ public class TileNode : MonoBehaviour
         return _tile.RotateValue;
     }
 
+    public void ChangedGimmickTileRotate(int rotateDir)
+    {
+        float rotationAngle = (rotateDir) * -90f;
+
+        _iageGimmickRectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
+    }
+
     public void ChangedTileRotate(int rotateValue)
     {
         _tile.RotateValue = rotateValue;
 
         float rotationAngle = (rotateValue) * -90f;
 
-        if(_tile.GimmickType == GimmickType.None)
-            _imageRoadRectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
-        else 
-            _iageGimmickRectTransform.rotation = Quaternion.Euler(0,0,rotationAngle);
+        _imageRoadRectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
     }
 
     public void DisEnableOutLine()
     {
         _backgroundOutline.enabled = false;
+    }
+
+    public void DeleteTileTypes(DeleteTileAttributeList DeleteType)
+    {
+        switch (DeleteType)
+        {
+            case DeleteTileAttributeList.Gimmick:
+                _tile.GimmickType = GimmickType.None;
+                _imageGimmick.sprite = null;
+                _imageGimmick.enabled = false;
+                break;
+            case DeleteTileAttributeList.Road:
+                _tile.Type = TileType.None;
+                _tile.TileShape = -1;
+                _imageRoad.sprite = null;
+                _imageRoad.enabled = false;
+                break;
+            case DeleteTileAttributeList.All:
+                DeleteTileTypes(DeleteTileAttributeList.Gimmick);
+                DeleteTileTypes(DeleteTileAttributeList.Road);
+                break;
+        }
+
+        if(!_imageRoad.enabled && !_imageGimmick.enabled) 
+            _background.enabled = false;
     }
 }
