@@ -55,8 +55,8 @@ public class JsonSaveLoader : MonoBehaviour
 
             // 파일 이름이 양식을 지키는지 확인합니다.
             var stringList = fileName.Split('-');
-            bool saveAble1 = int.Parse(stringList[0]) < 5;
-            bool saveAble2 = int.Parse(stringList[1]) < 21;
+            bool saveAble1 = int.TryParse(stringList[0], out int value1) && value1 < 5;
+            bool saveAble2 = int.TryParse(stringList[1], out int value2) && value2 < 21;
 
             if(!saveAble1 || !saveAble2) 
             {
@@ -73,6 +73,7 @@ public class JsonSaveLoader : MonoBehaviour
         }
         catch(Exception e)
         {
+            Debug.LogError(e.Message);
             EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "JSON 파일 저장 중 오류가 발생했습니다: " + e.Message);
         }
     }
