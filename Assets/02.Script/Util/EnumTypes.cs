@@ -18,33 +18,13 @@ namespace EnumTypes
 
     public enum UIEvents
     {
-        OnClickSignInGoogle,
-        OnClickStart,
-        OnClickItemBuyButton,
-        OnClickGoldBuyButton,
-        OnClickChangeBuyItemCount,
-        OnClickEnableItemBuyPopup,
-        OnClickEnableGoldBuyPopup,
-        OnClickGoldBuyExit,
-        OnCreateItemSlot,
-        OnCreateGoldPackageSlot,
-        GetPlayerInventoryResources,
-        GoldStorePopup,
-        GoldStoreExit
+        SavePopUp,
+        ErrorPopUP,
     }
 
     public enum DataEvents
     {
-        OnUserInventoryLoad,
-        OnUserInventorySave,
-        OnItemDataLoad,
-        OnPaymentSuccessful,
-        MVVMChangedGold,
-        MVVMChangedERC,
-        MVVMChangedInventoryItemDictionary,
-        PlayerGoldChanged,
-        PlayerERCChanged,
-        PlayerItemListChanged
+        TileSave
     }
 
     public enum GoldEvent

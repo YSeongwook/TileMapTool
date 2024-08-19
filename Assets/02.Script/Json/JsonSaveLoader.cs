@@ -13,9 +13,12 @@ public class JsonSaveLoader : MonoBehaviour
     public TMP_InputField fileNameInputField; // 파일 이름을 입력받는 InputField
     public string saveDirectory = "C:/Download/TileMap"; // 저장할 디렉터리 경로
 
+    private List<Tile> saveTileList;
+
     private void Awake()
     {
         EventManager<TileEvent>.StartListening<List<Tile>>(TileEvent.JsonSaveData, SaveJsonFile);
+        EventManager<DataEvents>.StartListening(DataEvents.TileSave, SaveSuccess);
     }
 
     private void Start()
@@ -30,6 +33,7 @@ public class JsonSaveLoader : MonoBehaviour
     private void OnDestroy()
     {
         EventManager<TileEvent>.StopListening<List<Tile>>(TileEvent.JsonSaveData, SaveJsonFile);
+        EventManager<DataEvents>.StopListening(DataEvents.TileSave, SaveSuccess);
     }
 
     // JSON 파일을 저장하는 함수
@@ -43,26 +47,49 @@ public class JsonSaveLoader : MonoBehaviour
             // 파일 이름이 비어있는지 확인합니다.
             if (string.IsNullOrEmpty(fileName))
             {
-                Debug.Log("파일 이름이 입력되지 않았습니다.");
+                // 팝업 발생
+                EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "파일 이름이 입력되지 않았습니다.");
+
                 return;
             }
 
-            // 리스트를 JSON으로 변환합니다.
-            string json = JsonConvert.SerializeObject(tileList, Formatting.Indented);
+            // 파일 이름이 양식을 지키는지 확인합니다.
+            var stringList = fileName.Split('-');
+            bool saveAble1 = int.Parse(stringList[0]) < 5;
+            bool saveAble2 = int.Parse(stringList[1]) < 21;
 
-            // 사용자 지정 경로에 파일 경로를 설정합니다.
-            string filePath = Path.Combine(saveDirectory, fileName + ".json");
+            if(!saveAble1 || !saveAble2) 
+            {
+                // 팝업 발생
+                EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "잘못된 파일 이름입니다.");
 
-            // JSON 데이터를 파일로 저장합니다.
-            File.WriteAllText(filePath, json);
+                return;
+            }
 
-            // 저장 완료 메시지를 출력합니다.
-            Debug.Log("JSON 파일이 저장되었습니다: " + filePath);
+            saveTileList = tileList;
+
+            // 저장하시겠습니까 팝업 발생
+            EventManager<UIEvents>.TriggerEvent(UIEvents.SavePopUp);
         }
         catch(Exception e)
         {
-            Debug.LogError("JSON 파일 저장 중 오류가 발생했습니다: " + e.Message);
+            EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "JSON 파일 저장 중 오류가 발생했습니다: " + e.Message);
         }
+    }
+
+    public void SaveSuccess()
+    {
+        // 리스트를 JSON으로 변환합니다.
+        string json = JsonConvert.SerializeObject(saveTileList, Formatting.Indented);
+
+        // 사용자 지정 경로에 파일 경로를 설정합니다.
+        string filePath = Path.Combine(saveDirectory, fileNameInputField.text + ".json");
+
+        // JSON 데이터를 파일로 저장합니다.
+        File.WriteAllText(filePath, json);
+
+        // 저장 완료 메시지를 출력합니다.
+        EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "JSON 파일이 저장되었습니다: " + filePath);
     }
 
     // JSON 파일을 로드하는 함수
@@ -74,7 +101,7 @@ public class JsonSaveLoader : MonoBehaviour
         // 파일 이름이 비어있는지 확인합니다.
         if (string.IsNullOrEmpty(fileName))
         {
-            Debug.Log("파일 이름이 입력되지 않았습니다.");
+            EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "파일 이름이 입력되지 않았습니다.");
             return null;
         }
 
@@ -94,14 +121,14 @@ public class JsonSaveLoader : MonoBehaviour
             fileNameInputField.text = fileName;
 
             // 로드된 데이터 출력
-            Debug.Log("JSON 파일이 로드되었습니다: " + filePath);
+            EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "JSON 파일이 로드되었습니다: " + filePath);
 
             // 데이터 반환
             return tilesData;   
         }
         else
         {
-            Debug.Log("파일을 찾을 수 없습니다: " + filePath);
+            EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "파일을 찾을 수 없습니다: " + filePath);
             return null;
         }
     }
