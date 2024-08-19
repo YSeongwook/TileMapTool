@@ -1,7 +1,5 @@
 using EnumTypes;
 using EventLibrary;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TileRotation : MonoBehaviour
@@ -26,7 +24,7 @@ public class TileRotation : MonoBehaviour
 
     public void OnClickRightRotate()
     {
-        float rotateValue = 0;
+        var rotateValue = 0;
         if (isGimmickTile)
         {
             rotateValue = 1;
@@ -41,7 +39,7 @@ public class TileRotation : MonoBehaviour
 
     public void OnClickLeftRotate()
     {
-        float rotateValue = 0;
+        var rotateValue = 0;
         if (isGimmickTile)
         {
             rotateValue = -1;

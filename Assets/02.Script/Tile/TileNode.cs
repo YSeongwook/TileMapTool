@@ -1,3 +1,4 @@
+using System;
 using EnumTypes;
 using EventLibrary;
 using UnityEngine;
@@ -25,7 +26,7 @@ public struct Tile
     public TileType Type;
     public GimmickType GimmickType;
     public int RotateValue;
-    public int TileShape;   // -1. None, 0. คำ, 1. L, 2. T, 3. +, 4. StopPoint
+    public int TileShape;
 }
 
 public class TileNode : MonoBehaviour
@@ -39,7 +40,7 @@ public class TileNode : MonoBehaviour
     private RectTransform _rectTransform;
 
     private RectTransform _imageRoadRectTransform;
-    private RectTransform _iageGimmickRectTransform;
+    private RectTransform _imageGimmickRectTransform;
 
     private Outline _backgroundOutline;
 
@@ -64,8 +65,8 @@ public class TileNode : MonoBehaviour
         _imageRoadRectTransform.sizeDelta = new Vector2(120, 120);
         _imageRoad.enabled = false;
 
-        _iageGimmickRectTransform = _imageGimmick.GetComponent<RectTransform>();
-        _iageGimmickRectTransform.sizeDelta = _rectTransform.sizeDelta - new Vector2(10, 10);
+        _imageGimmickRectTransform = _imageGimmick.GetComponent<RectTransform>();
+        _imageGimmickRectTransform.sizeDelta = _rectTransform.sizeDelta - new Vector2(10, 10);
         _imageGimmick.enabled = false;
 
         _backgroundOutline.enabled = false;
@@ -111,7 +112,7 @@ public class TileNode : MonoBehaviour
     {
         float rotationAngle = (rotateDir) * -90f;
 
-        _iageGimmickRectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
+        _imageGimmickRectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
     }
 
     public void ChangedTileRotate(int rotateValue)
@@ -128,9 +129,9 @@ public class TileNode : MonoBehaviour
         _backgroundOutline.enabled = false;
     }
 
-    public void DeleteTileTypes(DeleteTileAttributeList DeleteType)
+    public void DeleteTileTypes(DeleteTileAttributeList deleteType)
     {
-        switch (DeleteType)
+        switch (deleteType)
         {
             case DeleteTileAttributeList.Gimmick:
                 _tile.GimmickType = GimmickType.None;
@@ -146,6 +147,9 @@ public class TileNode : MonoBehaviour
             case DeleteTileAttributeList.All:
                 DeleteTileTypes(DeleteTileAttributeList.Gimmick);
                 DeleteTileTypes(DeleteTileAttributeList.Road);
+                break;
+            default:
+                DebugLogger.Log("DeleteTileTypes Default");
                 break;
         }
 

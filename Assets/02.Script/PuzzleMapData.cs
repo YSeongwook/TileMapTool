@@ -13,13 +13,23 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         base.Awake();
 
         _selectTile = null;
+        AddEvents();
+    }
+
+    private void OnDestroy()
+    {
+        RemoveEvents();
+    }
+
+    private void AddEvents()
+    {
         EventManager<TileEvent>.StartListening<TileNode>(TileEvent.SelectTileNode, OnClickSelectTile);
         EventManager<TileEvent>.StartListening<Tile>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
         EventManager<TileEvent>.StartListening<int, bool>(TileEvent.RotationSelectTileNodeInfo, RotationSelectTile);
         EventManager<TileEvent>.StartListening<DeleteTileAttributeList>(TileEvent.DeleteTIleAttribute, DeleteGimmickTile);
     }
 
-    private void OnDestroy()
+    private void RemoveEvents()
     {
         EventManager<TileEvent>.StopListening<TileNode>(TileEvent.SelectTileNode, OnClickSelectTile);
         EventManager<TileEvent>.StopListening<Tile>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
@@ -45,12 +55,12 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         _selectTile.ChangedTileInfo(tileInfo);
     }
 
-    private void RotationSelectTile(int Rotate, bool isGimmick)
+    private void RotationSelectTile(int rotate, bool isGimmick)
     {
         if (isGimmick)
-            _selectTile.ChangedGimmickTileRotate(Rotate);
+            _selectTile.ChangedGimmickTileRotate(rotate);
         else
-           _selectTile.ChangedTileRotate(Rotate);
+           _selectTile.ChangedTileRotate(rotate);
     }
 
     private void DeleteGimmickTile(DeleteTileAttributeList deleteType)

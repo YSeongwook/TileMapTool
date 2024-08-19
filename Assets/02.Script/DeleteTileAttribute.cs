@@ -1,15 +1,6 @@
 using EnumTypes;
 using EventLibrary;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public enum DeleteTileAttributeList 
-{
-    Gimmick,
-    Road,
-    All
-}
 
 public class DeleteTileAttribute : MonoBehaviour
 {

@@ -2,14 +2,6 @@ using UnityEngine;
 
 namespace EnumTypes
 {
-    public enum PlayerState
-    {
-        Stand,
-        Move,
-        Run,
-        Hold
-    }
-
     public enum Layers
     {
         Default,
@@ -22,19 +14,6 @@ namespace EnumTypes
         Reserved3,
         Player,
         Enemy,
-    }
-
-    public enum HeroEvents
-    {
-        LeaderAttackStarted,
-        LeaderAttackStopped,
-        LeaderDirectionChanged,
-    }
-
-    public enum FormationEvents
-    {
-        OnChangeLeaderMode,
-        SetLeader,
     }
 
     public enum UIEvents
@@ -59,7 +38,6 @@ namespace EnumTypes
         OnUserInventoryLoad,
         OnUserInventorySave,
         OnItemDataLoad,
-        HeroCollectionUpdated,
         OnPaymentSuccessful,
         MVVMChangedGold,
         MVVMChangedERC,
@@ -76,20 +54,6 @@ namespace EnumTypes
         OnGetERC
     }
 
-    public enum GoogleEvents
-    {
-        GPGSSignIn,
-        ManualGPGSSignIn,
-    }
-
-    public enum FirebaseEvents
-    {
-        FirebaseInitialized,
-        FirebaseDatabaseInitialized,
-        FirebaseSignIn,
-        EmailSignIn,
-    }
-
     public enum TileEvent
     {
         SelectTileNode,
@@ -97,6 +61,13 @@ namespace EnumTypes
         RotationSelectTileNodeInfo,
         GetTileRotateValue,
         DeleteTIleAttribute
+    }
+    
+    public enum DeleteTileAttributeList 
+    {
+        Gimmick,
+        Road,
+        All
     }
     
     public class EnumTypes : MonoBehaviour
