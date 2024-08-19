@@ -67,7 +67,7 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         if (isGimmick)
             _selectTile.ChangedGimmickTileRotate(rotate);
         else
-           _selectTile.ChangedTileRotate(rotate);
+           _selectTile.ChangedRoadTileRotate(rotate);
     }
 
     private void DeleteGimmickTile(DeleteTileAttributeList deleteType)

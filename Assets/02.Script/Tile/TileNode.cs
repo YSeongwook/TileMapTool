@@ -23,7 +23,8 @@ public struct Tile
 {
     public TileType Type;
     public GimmickType GimmickType;
-    public int RotateValue;
+    public int RotateRoadValue;
+    public int RotateGimmickValue;
     public int RoadTileShape;
     public int GimmickTileShape;
 }
@@ -55,6 +56,9 @@ public class TileNode : MonoBehaviour
         _imageGimmick = transform.GetChild(2).GetComponent<Image>();
         _rectTransform = GetComponent<RectTransform>();
 
+        _imageRoadRectTransform = _imageRoad.GetComponent<RectTransform>();
+        _imageGimmickRectTransform = _imageGimmick.GetComponent<RectTransform>();
+
         instanID = GetInstanceID();
     }
 
@@ -63,10 +67,8 @@ public class TileNode : MonoBehaviour
         RectTransform imageBackGroundRectTransform = _background.GetComponent<RectTransform>();
         imageBackGroundRectTransform.sizeDelta = new Vector2(120, 120);
 
-        _imageRoadRectTransform = _imageRoad.GetComponent<RectTransform>();
         _imageRoadRectTransform.sizeDelta = new Vector2(120, 120);
 
-        _imageGimmickRectTransform = _imageGimmick.GetComponent<RectTransform>();
         _imageGimmickRectTransform.sizeDelta = _rectTransform.sizeDelta - new Vector2(10, 10);
 
         _backgroundOutline.enabled = false;
@@ -88,7 +90,7 @@ public class TileNode : MonoBehaviour
     public void OnClickThisNode()
     {
         EventManager<TileEvent>.TriggerEvent(TileEvent.SelectTileNode, this);
-        EventManager<TileEvent>.TriggerEvent(TileEvent.GetTileRotateValue, _tile.RotateValue);
+        EventManager<TileEvent>.TriggerEvent(TileEvent.GetTileRotateValue, _tile.RotateRoadValue, _tile.RotateGimmickValue);
 
         _backgroundOutline.enabled = true;
     }
@@ -97,10 +99,12 @@ public class TileNode : MonoBehaviour
     {
         _tile.Type = tileInfo.Type;
         _tile.GimmickType = tileInfo.GimmickType;
-        _tile.RotateValue = tileInfo.RotateValue;
+        _tile.RotateRoadValue = tileInfo.RotateRoadValue;
+        _tile.RotateGimmickValue = tileInfo.RotateGimmickValue;
         _tile.RoadTileShape = tileInfo.RoadTileShape;
+        _tile.GimmickTileShape = tileInfo.GimmickTileShape;
 
-        Debug.Log(_tile.RotateValue);
+        Debug.Log(_tile.RotateRoadValue);
 
         _background.enabled = true;  
 
@@ -113,20 +117,23 @@ public class TileNode : MonoBehaviour
         {
             _imageGimmick.enabled = true;
             _imageGimmick.sprite = sprite;
-        }             
+        }
+
+        ChangedGimmickTileRotate(_tile.RotateGimmickValue);
+        ChangedRoadTileRotate(_tile.RotateRoadValue);
     }
 
     public void ChangedGimmickTileRotate(int rotateDir)
     {
+        _tile.RotateGimmickValue = rotateDir;
         float rotationAngle = (rotateDir) * -90f;
 
         _imageGimmickRectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
     }
 
-    public void ChangedTileRotate(int rotateValue)
+    public void ChangedRoadTileRotate(int rotateValue)
     {
-        _tile.RotateValue = rotateValue;
-
+        _tile.RotateRoadValue = rotateValue;
         float rotationAngle = (rotateValue) * -90f;
 
         _imageRoadRectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
@@ -180,12 +187,15 @@ public class TileNode : MonoBehaviour
             {
                 _imageRoad.enabled = true;
                 _imageRoad.sprite = Roadsprite;
-            }else _imageRoad.enabled = false;
+                ChangedRoadTileRotate(tileInfo.RotateRoadValue);
+            }
+            else _imageRoad.enabled = false;
 
             if (GimmickSprite != null)
             {
                 _imageGimmick.enabled = true;
                 _imageGimmick.sprite = GimmickSprite;
+                ChangedGimmickTileRotate(tileInfo.RotateGimmickValue);
             }else _imageGimmick.enabled = false;
             
         }      

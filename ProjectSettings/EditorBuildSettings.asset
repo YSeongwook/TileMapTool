@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/01.Scenes/Jinmyung/Jinmyung.unity
+    guid: 171e2e49357c60d4cad74ff4cd9f616e
   m_configObjects: {}

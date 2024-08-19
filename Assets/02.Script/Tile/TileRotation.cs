@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class TileRotation : MonoBehaviour
 {
-    private int RotateValue = 0;
+    private int RoadRotateValue = 0;
+    private int GimmickRotateValue = 0;
     private bool isGimmickTile;
 
     private void Awake()
     {
-        EventManager<TileEvent>.StartListening<int>(TileEvent.GetTileRotateValue, GetSelectTileRotate);
+        EventManager<TileEvent>.StartListening<int, int>(TileEvent.GetTileRotateValue, GetSelectTileRotate);
     }
 
     private void OnDestroy()
     {
-        EventManager<TileEvent>.StopListening<int>(TileEvent.GetTileRotateValue, GetSelectTileRotate);
+        EventManager<TileEvent>.StopListening<int, int>(TileEvent.GetTileRotateValue, GetSelectTileRotate);
     }
 
-    private void GetSelectTileRotate(int rotateValue)
+    private void GetSelectTileRotate(int roadRotateValue, int GimmickRotateValue)
     {
-        this.RotateValue = rotateValue;
+        this.RoadRotateValue = roadRotateValue;
+        this.GimmickRotateValue = GimmickRotateValue;
     }
 
     public void OnClickRightRotate()
@@ -27,12 +29,13 @@ public class TileRotation : MonoBehaviour
         var rotateValue = 0;
         if (isGimmickTile)
         {
-            rotateValue = 1;
+            GimmickRotateValue = (GimmickRotateValue + 1) % 4;
+            rotateValue = GimmickRotateValue;
         }
         else
         {
-            RotateValue = (RotateValue + 1) % 4;
-            rotateValue = RotateValue;
+            RoadRotateValue = (RoadRotateValue + 1) % 4;
+            rotateValue = RoadRotateValue;
         }
         EventManager<TileEvent>.TriggerEvent(TileEvent.RotationSelectTileNodeInfo, rotateValue, isGimmickTile);
     }
@@ -42,12 +45,13 @@ public class TileRotation : MonoBehaviour
         var rotateValue = 0;
         if (isGimmickTile)
         {
-            rotateValue = -1;
+            GimmickRotateValue = (GimmickRotateValue + 3) % 4;
+            rotateValue = GimmickRotateValue;
         }
         else
         {
-            RotateValue = (RotateValue + 3) % 4;
-            rotateValue = RotateValue;
+            RoadRotateValue = (RoadRotateValue + 3) % 4;
+            rotateValue = RoadRotateValue;
         }
         EventManager<TileEvent>.TriggerEvent(TileEvent.RotationSelectTileNodeInfo, rotateValue, isGimmickTile);
     }        

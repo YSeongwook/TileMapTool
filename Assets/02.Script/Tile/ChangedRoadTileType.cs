@@ -24,7 +24,7 @@ public class ChangedRoadTileType : MonoBehaviour
         Tile newTile = PuzzleMapData.Instance._selectTile.GetTileInfo;
         newTile.Type = tileType;
         newTile.GimmickType = GimmickType.None;
-        newTile.RotateValue = 0;
+        newTile.RotateRoadValue = 0;
         newTile.RoadTileShape = tileShape;
 
         EventManager<TileEvent>.TriggerEvent(TileEvent.ChangedSelectTileInfo, newTile, tileSprite);
