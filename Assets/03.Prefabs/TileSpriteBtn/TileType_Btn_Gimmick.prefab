@@ -200,7 +200,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1493912242, guid: 49d1f296e0818ee48adad228cf201ef8, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 3334919374104150952}
   - component: {fileID: 1622877990199349139}
   m_Layer: 5
-  m_Name: TileType_Btn_Gimmick1
+  m_Name: TileType_Btn_Gimmick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

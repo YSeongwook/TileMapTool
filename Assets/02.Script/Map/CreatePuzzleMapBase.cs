@@ -70,6 +70,8 @@ public class CreatePuzzleMapBase : MonoBehaviour
             GameObject puzzlePiece = Instantiate(puzzlePrefab, transform.position, transform.rotation);
             puzzlePiece.transform.SetParent(gameObject.transform);
         }
+        
+        // Todo: 퍼즐 
     }
 
     private void LayoutRectTransformChanged(int puzzleSize)

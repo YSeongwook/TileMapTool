@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using EnumTypes;
 using EventLibrary;
-using UnityEngine.UI;
 
 public class PuzzleMapData : Singleton<PuzzleMapData>
 {
