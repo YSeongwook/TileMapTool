@@ -21,18 +21,20 @@ public enum GimmickType
 
 public struct Tile
 {
-    public Sprite Sprite;
     public TileType Type;
     public GimmickType GimmickType;
     public int RotateValue;
-    public int TileShape;
+    public int RoadTileShape;
+    public int GimmickTileShape;
 }
 
 public class TileNode : MonoBehaviour
 {
     public int instanID;
     
-    private Tile _tile;
+     private Tile _tile;
+    public Tile GetTileInfo {  get { return _tile; } }
+
     private Image _background;
     private Image _imageRoad;
     private Image _imageGimmick;
@@ -42,6 +44,8 @@ public class TileNode : MonoBehaviour
     private RectTransform _imageGimmickRectTransform;
 
     private Outline _backgroundOutline;
+
+    private bool isLoad;
 
     private void Awake()
     {
@@ -58,18 +62,27 @@ public class TileNode : MonoBehaviour
     {
         RectTransform imageBackGroundRectTransform = _background.GetComponent<RectTransform>();
         imageBackGroundRectTransform.sizeDelta = new Vector2(120, 120);
-        _background.enabled = false;
 
         _imageRoadRectTransform = _imageRoad.GetComponent<RectTransform>();
         _imageRoadRectTransform.sizeDelta = new Vector2(120, 120);
-        _imageRoad.enabled = false;
 
         _imageGimmickRectTransform = _imageGimmick.GetComponent<RectTransform>();
         _imageGimmickRectTransform.sizeDelta = _rectTransform.sizeDelta - new Vector2(10, 10);
-        _imageGimmick.enabled = false;
 
         _backgroundOutline.enabled = false;
-        _tile.TileShape = -1;
+
+        if (isLoad)
+        {
+            isLoad = false;
+            return;
+        }
+
+        _background.enabled = false;
+        _imageRoad.enabled = false;
+        _imageGimmick.enabled = false;
+
+        _tile.GimmickTileShape = -1;
+        _tile.RoadTileShape = -1;
     }
 
     public void OnClickThisNode()
@@ -80,31 +93,27 @@ public class TileNode : MonoBehaviour
         _backgroundOutline.enabled = true;
     }
 
-    public void ChangedTileInfo(Tile tileInfo)
+    public void ChangedTileInfo(Tile tileInfo, Sprite sprite)
     {
-        _tile.Sprite = tileInfo.Sprite;
         _tile.Type = tileInfo.Type;
         _tile.GimmickType = tileInfo.GimmickType;
-        _tile.RotateValue = 0;
-        _tile.TileShape = tileInfo.TileShape;
+        _tile.RotateValue = tileInfo.RotateValue;
+        _tile.RoadTileShape = tileInfo.RoadTileShape;
+
+        Debug.Log(_tile.RotateValue);
 
         _background.enabled = true;  
 
         if (tileInfo.Type != TileType.Gimmick)
         {
             _imageRoad.enabled = true;
-            _imageRoad.sprite = tileInfo.Sprite;
+            _imageRoad.sprite = sprite;
         }
         else
         {
             _imageGimmick.enabled = true;
-            _imageGimmick.sprite = tileInfo.Sprite;
+            _imageGimmick.sprite = sprite;
         }             
-    }
-
-    public int GetTileRotateValue()
-    {
-        return _tile.RotateValue;
     }
 
     public void ChangedGimmickTileRotate(int rotateDir)
@@ -134,12 +143,13 @@ public class TileNode : MonoBehaviour
         {
             case DeleteTileAttributeList.Gimmick:
                 _tile.GimmickType = GimmickType.None;
+                _tile.GimmickTileShape = -1;
                 _imageGimmick.sprite = null;
                 _imageGimmick.enabled = false;
                 break;
             case DeleteTileAttributeList.Road:
                 _tile.Type = TileType.None;
-                _tile.TileShape = -1;
+                _tile.RoadTileShape = -1;
                 _imageRoad.sprite = null;
                 _imageRoad.enabled = false;
                 break;
@@ -154,5 +164,30 @@ public class TileNode : MonoBehaviour
 
         if(!_imageRoad.enabled && !_imageGimmick.enabled) 
             _background.enabled = false;
+    }
+
+    public void LoadTileInfo(Tile tileInfo, Sprite Roadsprite, Sprite GimmickSprite)
+    {
+        isLoad = true;
+
+        _tile = tileInfo;
+
+        if (Roadsprite != null || GimmickSprite != null)
+        {
+            _background.enabled = true;
+
+            if(Roadsprite != null)
+            {
+                _imageRoad.enabled = true;
+                _imageRoad.sprite = Roadsprite;
+            }else _imageRoad.enabled = false;
+
+            if (GimmickSprite != null)
+            {
+                _imageGimmick.enabled = true;
+                _imageGimmick.sprite = GimmickSprite;
+            }else _imageGimmick.enabled = false;
+            
+        }      
     }
 }

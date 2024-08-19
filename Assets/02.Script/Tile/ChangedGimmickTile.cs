@@ -19,12 +19,13 @@ public class ChangedGimmickTile : MonoBehaviour
 
     public void OnClickChangedTileInfo()
     {
-        Tile newTile = new Tile();
-        newTile.Sprite = tileSprite;
+        Tile newTile = PuzzleMapData.Instance._selectTile.GetTileInfo;
         newTile.Type = TileType.Gimmick;
         newTile.GimmickType = gimmickType;
-        newTile.TileShape = tileShape;
+        newTile.GimmickTileShape = tileShape;
 
-        EventManager<TileEvent>.TriggerEvent(TileEvent.ChangedSelectTileInfo, newTile);
+        EventManager<TileEvent>.TriggerEvent(TileEvent.ChangedSelectTileInfo, newTile, tileSprite);
     }
+
+
 }

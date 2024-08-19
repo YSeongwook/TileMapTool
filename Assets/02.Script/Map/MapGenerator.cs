@@ -1,9 +1,16 @@
+using EnumTypes;
+using EventLibrary;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
     public GameObject puzzleMapGrid;
     [SerializeField] private GameObject puzzlePrefab;
+
+    [SerializeField] private List<Sprite> Road;
+    [SerializeField] private List<Sprite> Gimmick;
 
     private const int Puzzle3X3 = 9;
     private const int Puzzle4X4 = 16;
@@ -16,6 +23,16 @@ public class MapGenerator : MonoBehaviour
     private void Awake()
     {
         _rectTransform = puzzleMapGrid.GetComponent<RectTransform>();
+    }
+
+    private void Start()
+    {
+        EventManager<TileEvent>.StartListening<List<Tile>>(TileEvent.JsonLoadData, SetTileList);
+    }
+
+    private void OnDestroy()
+    {
+        EventManager<TileEvent>.StopListening<List<Tile>>(TileEvent.JsonLoadData, SetTileList);
     }
 
     public void OnCreate3X3Puzzle()
@@ -98,5 +115,46 @@ public class MapGenerator : MonoBehaviour
         }
 
         _rectTransform.anchoredPosition = ScreenPos;
+    }
+
+    public List<Tile> GetTileList()
+    {
+        List<Tile> tileList = new List<Tile>();
+
+        foreach(Transform t in puzzleMapGrid.transform)
+        {
+            var newTileInfo = t.GetComponent<TileNode>();
+            if (newTileInfo == null) continue;
+
+            tileList.Add(newTileInfo.GetTileInfo);
+        }
+
+        return tileList;
+    }
+
+    public void SetTileList(List<Tile> tileList)
+    {
+        int TileCount = tileList.Count;
+
+        DestroyAllChildren();
+
+        LayoutRectTransformChanged(TileCount);
+
+        try
+        {
+            for (int i = 0; i < TileCount; i++)
+            {
+                GameObject puzzlePiece = Instantiate(puzzlePrefab, puzzleMapGrid.transform.position, puzzleMapGrid.transform.rotation);
+                puzzlePiece.transform.SetParent(puzzleMapGrid.transform);
+                var tile = puzzlePiece.GetComponent<TileNode>();
+                Sprite roadSprite = tileList[i].RoadTileShape != -1 ? Road[tileList[i].RoadTileShape] : null;
+                Sprite gimmickSprite = tileList[i].GimmickTileShape != -1 ? Gimmick[tileList[i].GimmickTileShape] : null;
+                tile.LoadTileInfo(tileList[i], roadSprite, gimmickSprite);
+            }
+        }catch(Exception ex) 
+        {
+            Debug.LogError("에러가 발생했습니다." + ex.Message);
+            return;
+        }
     }
 }

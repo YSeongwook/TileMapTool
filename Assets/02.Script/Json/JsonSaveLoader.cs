@@ -1,21 +1,25 @@
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json;
+using EventLibrary;
+using EnumTypes;
+using System;
 
 public class JsonSaveLoader : MonoBehaviour
 {
     public TMP_InputField fileNameInputField; // 파일 이름을 입력받는 InputField
-    public Button saveButton; // 저장 버튼
-    public Button loadButton; // 로드 버튼
     public string saveDirectory = "C:/Download/TileMap"; // 저장할 디렉터리 경로
+
+    private void Awake()
+    {
+        EventManager<TileEvent>.StartListening<List<Tile>>(TileEvent.JsonSaveData, SaveJsonFile);
+    }
 
     private void Start()
     {
-        // Save 및 Load 버튼에 클릭 이벤트 연결
-        saveButton.onClick.AddListener(SaveJsonFile);
-        loadButton.onClick.AddListener(LoadJsonFile);
-
         // 디렉터리가 존재하지 않으면 생성
         if (!Directory.Exists(saveDirectory))
         {
@@ -23,41 +27,46 @@ public class JsonSaveLoader : MonoBehaviour
         }
     }
 
-    // JSON 파일을 저장하는 함수
-    public void SaveJsonFile()
+    private void OnDestroy()
     {
-        // InputField에서 입력한 파일 이름을 가져옵니다.
-        string fileName = fileNameInputField.text;
+        EventManager<TileEvent>.StopListening<List<Tile>>(TileEvent.JsonSaveData, SaveJsonFile);
+    }
 
-        // 파일 이름이 비어있는지 확인합니다.
-        if (string.IsNullOrEmpty(fileName))
+    // JSON 파일을 저장하는 함수
+    public void SaveJsonFile(List<Tile> tileList)
+    {
+        try
         {
-            Debug.Log("파일 이름이 입력되지 않았습니다.");
-            return;
+            // InputField에서 입력한 파일 이름을 가져옵니다.
+            string fileName = fileNameInputField.text;
+
+            // 파일 이름이 비어있는지 확인합니다.
+            if (string.IsNullOrEmpty(fileName))
+            {
+                Debug.Log("파일 이름이 입력되지 않았습니다.");
+                return;
+            }
+
+            // 리스트를 JSON으로 변환합니다.
+            string json = JsonConvert.SerializeObject(tileList, Formatting.Indented);
+
+            // 사용자 지정 경로에 파일 경로를 설정합니다.
+            string filePath = Path.Combine(saveDirectory, fileName + ".json");
+
+            // JSON 데이터를 파일로 저장합니다.
+            File.WriteAllText(filePath, json);
+
+            // 저장 완료 메시지를 출력합니다.
+            Debug.Log("JSON 파일이 저장되었습니다: " + filePath);
         }
-
-        // 예시로 저장할 데이터 생성
-        TestData testData = new TestData
+        catch(Exception e)
         {
-            message = "이것은 테스트 데이터입니다.",
-            number = 42
-        };
-
-        // JSON으로 변환합니다.
-        string json = JsonUtility.ToJson(testData, true);
-
-        // 사용자 지정 경로에 파일 경로를 설정합니다.
-        string filePath = Path.Combine(saveDirectory, fileName + ".json");
-
-        // JSON 데이터를 파일로 저장합니다.
-        File.WriteAllText(filePath, json);
-
-        // 저장 완료 메시지를 출력합니다.
-        Debug.Log("JSON 파일이 저장되었습니다: " + filePath);
+            Debug.LogError("JSON 파일 저장 중 오류가 발생했습니다: " + e.Message);
+        }
     }
 
     // JSON 파일을 로드하는 함수
-    public void LoadJsonFile()
+    public List<Tile> LoadJsonFile()
     {
         // InputField에서 입력한 파일 이름을 가져옵니다.
         string fileName = fileNameInputField.text;
@@ -66,7 +75,7 @@ public class JsonSaveLoader : MonoBehaviour
         if (string.IsNullOrEmpty(fileName))
         {
             Debug.Log("파일 이름이 입력되지 않았습니다.");
-            return;
+            return null;
         }
 
         // 사용자 지정 경로에 파일 경로를 설정합니다.
@@ -78,20 +87,22 @@ public class JsonSaveLoader : MonoBehaviour
             // 파일에서 JSON 문자열을 읽어옵니다.
             string json = File.ReadAllText(filePath);
 
-            // JSON 문자열을 TestData 객체로 변환합니다.
-            TestData loadedData = JsonUtility.FromJson<TestData>(json);
+            // JSON 문자열을 List<Tile>로 변환합니다.
+            List<Tile> tilesData = JsonConvert.DeserializeObject<List<Tile>>(json);
 
             // InputField에 로드된 파일 이름을 다시 설정합니다
             fileNameInputField.text = fileName;
 
             // 로드된 데이터 출력
             Debug.Log("JSON 파일이 로드되었습니다: " + filePath);
-            Debug.Log("메시지: " + loadedData.message);
-            Debug.Log("숫자: " + loadedData.number);
+
+            // 데이터 반환
+            return tilesData;   
         }
         else
         {
             Debug.Log("파일을 찾을 수 없습니다: " + filePath);
+            return null;
         }
     }
 }

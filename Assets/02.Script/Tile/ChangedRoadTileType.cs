@@ -21,12 +21,12 @@ public class ChangedRoadTileType : MonoBehaviour
 
     public void OnClickChangedTileInfo()
     {
-        Tile newTile = new Tile();
-        newTile.Sprite = tileSprite;
+        Tile newTile = PuzzleMapData.Instance._selectTile.GetTileInfo;
         newTile.Type = tileType;
         newTile.GimmickType = GimmickType.None;
-        newTile.TileShape = tileShape;
+        newTile.RotateValue = 0;
+        newTile.RoadTileShape = tileShape;
 
-        EventManager<TileEvent>.TriggerEvent(TileEvent.ChangedSelectTileInfo, newTile);
+        EventManager<TileEvent>.TriggerEvent(TileEvent.ChangedSelectTileInfo, newTile, tileSprite);
     }
 }

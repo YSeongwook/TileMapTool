@@ -60,7 +60,11 @@ namespace EnumTypes
         ChangedSelectTileInfo,
         RotationSelectTileNodeInfo,
         GetTileRotateValue,
-        DeleteTIleAttribute
+        DeleteTIleAttribute,
+        SaveData,
+        JsonSaveData,
+        LoadData,
+        JsonLoadData
     }
     
     public enum DeleteTileAttributeList 
