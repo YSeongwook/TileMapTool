@@ -170,8 +170,8 @@ public class MapGenerator : Singleton<MapGenerator>
                 GameObject puzzlePiece = Instantiate(puzzlePrefab, puzzleMapGrid.transform.position, puzzleMapGrid.transform.rotation);
                 puzzlePiece.transform.SetParent(puzzleMapGrid.transform);
                 var tile = puzzlePiece.GetComponent<TileNode>();
-                Sprite roadSprite = tileList[i].RoadTileShape != -1 ? Road[tileList[i].RoadTileShape] : null;
-                Sprite gimmickSprite = tileList[i].GimmickTileShape != -1 ? Gimmick[tileList[i].GimmickTileShape] : null;
+                Sprite roadSprite = tileList[i].RoadShape != RoadShape.None ? Road[(int)tileList[i].RoadShape] : null;
+                Sprite gimmickSprite = tileList[i].GimmickShape != GimmickShape.None ? Gimmick[(int)tileList[i].GimmickShape] : null;
                 tile.LoadTileInfo(tileList[i], roadSprite, gimmickSprite);
             }
         }

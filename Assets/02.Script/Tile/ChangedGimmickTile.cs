@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class ChangedGimmickTile : MonoBehaviour
 {
     [SerializeField] private Sprite tileSprite;
-    [SerializeField] private GimmickType gimmickType;   
-    [SerializeField] private int tileShape;
+    [SerializeField] private GimmickShape gimmickShape;   
 
     private Image _tileImage;
 
@@ -20,12 +19,10 @@ public class ChangedGimmickTile : MonoBehaviour
     public void OnClickChangedTileInfo()
     {
         Tile newTile = PuzzleMapData.Instance._selectTile.GetTileInfo;
-        newTile.Type = TileType.Gimmick;
-        newTile.GimmickType = gimmickType;
-        newTile.GimmickTileShape = tileShape;
+        newTile.Type = TileType.Gimmick; // 기믹 타일 설정
+        newTile.GimmickShape = gimmickShape; // 기믹의 모양 설정
 
-        EventManager<TileEvent>.TriggerEvent(TileEvent.ChangedSelectTileInfo, newTile, tileSprite);
+        EventManager<TileEvent>.TriggerEvent<Tile, Sprite, Sprite>(
+            TileEvent.ChangedSelectTileInfo, newTile, tileSprite, null);
     }
-
-
 }

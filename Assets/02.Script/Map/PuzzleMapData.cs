@@ -3,7 +3,6 @@ using EnumTypes;
 using EventLibrary;
 using UnityEngine;
 
-
 public class PuzzleMapData : Singleton<PuzzleMapData>
 {
     public TileNode _selectTile {  get; private set; }
@@ -27,7 +26,7 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
     private void AddEvents()
     {
         EventManager<TileEvent>.StartListening<TileNode>(TileEvent.SelectTileNode, OnClickSelectTile);
-        EventManager<TileEvent>.StartListening<Tile, Sprite>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
+        EventManager<TileEvent>.StartListening<Tile, Sprite, Sprite>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
         EventManager<TileEvent>.StartListening<int, bool>(TileEvent.RotationSelectTileNodeInfo, RotationSelectTile);
         EventManager<TileEvent>.StartListening<DeleteTileAttributeList>(TileEvent.DeleteTIleAttribute, DeleteGimmickTile);
         EventManager<TileEvent>.StartListening(TileEvent.SaveData, SaveTileData);
@@ -37,7 +36,7 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
     private void RemoveEvents()
     {
         EventManager<TileEvent>.StopListening<TileNode>(TileEvent.SelectTileNode, OnClickSelectTile);
-        EventManager<TileEvent>.StopListening<Tile, Sprite>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
+        EventManager<TileEvent>.StopListening<Tile, Sprite, Sprite>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
         EventManager<TileEvent>.StopListening<int, bool>(TileEvent.RotationSelectTileNodeInfo, RotationSelectTile);
         EventManager<TileEvent>.StopListening<DeleteTileAttributeList>(TileEvent.DeleteTIleAttribute, DeleteGimmickTile);
         EventManager<TileEvent>.StopListening(TileEvent.SaveData, SaveTileData);
@@ -55,23 +54,27 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         _selectTile = tileNode;
     }
 
-    private void ChangedSelectTileInfo(Tile tileInfo, Sprite sprite)
+    private void ChangedSelectTileInfo(Tile tileInfo, Sprite roadSprite, Sprite gimmickSprite)
     {
         if (_selectTile == null) return;
 
-        _selectTile.ChangedTileInfo(tileInfo, sprite);
+        _selectTile.ChangedTileInfo(tileInfo, roadSprite, gimmickSprite);
     }
 
     private void RotationSelectTile(int rotate, bool isGimmick)
     {
+        if (_selectTile == null) return;
+
         if (isGimmick)
-            _selectTile.ChangedGimmickTileRotate(rotate);
+            _selectTile.ChangedRoadTileRotate(rotate);
         else
            _selectTile.ChangedRoadTileRotate(rotate);
     }
 
     private void DeleteGimmickTile(DeleteTileAttributeList deleteType)
     {
+        if (_selectTile == null) return;
+
         _selectTile.DeleteTileTypes(deleteType);
     }
 

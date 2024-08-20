@@ -1,15 +1,12 @@
 using EnumTypes;
 using EventLibrary;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChangedRoadTileType : MonoBehaviour
 {
     [SerializeField] private Sprite tileSprite;
-    [SerializeField] private TileType tileType;
-    [SerializeField] private int tileShape;
+    [SerializeField] private RoadShape roadShape; // 타일의 모양을 정의
 
     private Image _tileImage;
 
@@ -22,11 +19,11 @@ public class ChangedRoadTileType : MonoBehaviour
     public void OnClickChangedTileInfo()
     {
         Tile newTile = PuzzleMapData.Instance._selectTile.GetTileInfo;
-        newTile.Type = tileType;
-        newTile.GimmickType = GimmickType.None;
-        newTile.RotateRoadValue = 0;
-        newTile.RoadTileShape = tileShape;
-
-        EventManager<TileEvent>.TriggerEvent(TileEvent.ChangedSelectTileInfo, newTile, tileSprite);
+        newTile.Type = TileType.Road; // 길 타일 설정
+        newTile.RoadShape = roadShape;   // 길의 모양 설정
+        newTile.GimmickShape = GimmickShape.None; // 기믹은 없음으로 설정
+        
+        EventManager<TileEvent>.TriggerEvent<Tile, Sprite, Sprite>(
+            TileEvent.ChangedSelectTileInfo, newTile, tileSprite, null);
     }
 }
