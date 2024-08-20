@@ -1,3 +1,4 @@
+using System;
 using EnumTypes;
 using EventLibrary;
 using UnityEngine;
@@ -15,7 +16,7 @@ public enum TileType
 public enum RoadShape
 {
     None,
-    Linear,
+    Straight,
     L,
     T,
     Cross,
@@ -86,6 +87,17 @@ public class TileNode : MonoBehaviour
         _imageGimmick.enabled = false;
     }
 
+    // 길 타일의 스프라이트를 반환하는 메서드
+    public Sprite GetRoadSprite()
+    {
+        return _imageRoad.sprite;
+    }
+
+    public Sprite GetGimmickSprite()
+    {
+        return _imageGimmick.sprite;
+    }
+
     public void OnClickThisNode()
     {
         EventManager<TileEvent>.TriggerEvent(TileEvent.SelectTileNode, this);
@@ -105,6 +117,7 @@ public class TileNode : MonoBehaviour
         // 길 이미지는 항상 로드 또는 기믹 타일에서 표시됨
         if (tileInfo.Type == TileType.Road || tileInfo.Type == TileType.Gimmick)
         {
+            DebugLogger.Log("길 타일 배치");
             _imageRoad.enabled = true;
             _imageRoad.sprite = roadSprite;
             ChangedRoadTileRotate(_tile.RotateValue);

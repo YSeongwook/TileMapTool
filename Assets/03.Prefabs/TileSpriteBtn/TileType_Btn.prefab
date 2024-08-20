@@ -122,8 +122,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3167292293906910460}
-        m_TargetAssemblyTypeName: ChangedTileType, Assembly-CSharp
+      - m_Target: {fileID: 2417618184081682260}
+        m_TargetAssemblyTypeName: ChangedRoadTileType, Assembly-CSharp
         m_MethodName: OnClickChangedTileInfo
         m_Mode: 1
         m_Arguments:
@@ -143,7 +143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 538693828465702434}
-  - component: {fileID: 3167292293906910460}
+  - component: {fileID: 2417618184081682260}
   m_Layer: 5
   m_Name: TileType_Btn
   m_TagString: Untagged
@@ -173,7 +173,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 120, y: 156.875}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3167292293906910460
+--- !u!114 &2417618184081682260
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,9 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef448d73d0165ef4dad28b8d85432d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSprite: {fileID: -1493912242, guid: 49d1f296e0818ee48adad228cf201ef8, type: 3}
-  tileType: 2
-  tileShape: 0
+  tileSprite: {fileID: -2062186635, guid: 49d1f296e0818ee48adad228cf201ef8, type: 3}
+  roadShape: 0
 --- !u!1 &2248195261720978541
 GameObject:
   m_ObjectHideFlags: 0

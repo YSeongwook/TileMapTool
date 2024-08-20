@@ -18,12 +18,22 @@ public class ChangedRoadTileType : MonoBehaviour
 
     public void OnClickChangedTileInfo()
     {
-        Tile newTile = PuzzleMapData.Instance._selectTile.GetTileInfo;
+        TileNode selectedTileNode = PuzzleMapData.Instance._selectTile;
+
+        if (selectedTileNode == null) return;
+
+        Tile currentTileInfo = selectedTileNode.GetTileInfo;
+        Tile newTile = currentTileInfo;
+
         newTile.Type = TileType.Road; // 길 타일 설정
         newTile.RoadShape = roadShape;   // 길의 모양 설정
-        newTile.GimmickShape = GimmickShape.None; // 기믹은 없음으로 설정
-        
+
+        // 기존에 기믹 타일이 설정되어 있는지 확인하여, 그 값을 유지하도록 함
+        Sprite existingGimmickSprite = currentTileInfo.GimmickShape != GimmickShape.None ? selectedTileNode.GetGimmickSprite() : null;
+
         EventManager<TileEvent>.TriggerEvent<Tile, Sprite, Sprite>(
-            TileEvent.ChangedSelectTileInfo, newTile, tileSprite, null);
+            TileEvent.ChangedSelectTileInfo, newTile, tileSprite, existingGimmickSprite);
+        
+        DebugLogger.Log($"{tileSprite}");
     }
 }

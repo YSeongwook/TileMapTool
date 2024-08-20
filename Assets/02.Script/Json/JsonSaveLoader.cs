@@ -1,12 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using EnumTypes;
+using EventLibrary;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Newtonsoft.Json;
-using EventLibrary;
-using EnumTypes;
-using System;
 
 public class JsonSaveLoader : MonoBehaviour
 {
@@ -136,7 +135,7 @@ public class JsonSaveLoader : MonoBehaviour
 }
 
 // 테스트용 데이터 클래스
-[System.Serializable]
+[Serializable]
 public class TestData
 {
     public string message; // 예시 메시지
