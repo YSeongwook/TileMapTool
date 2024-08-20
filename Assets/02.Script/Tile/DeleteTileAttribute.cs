@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class DeleteTileAttribute : MonoBehaviour
 {
+    public void OnClickDeleteRoadTIle()
+    {
+        EventManager<TileEvent>.TriggerEvent(TileEvent.DeleteTIleAttribute, DeleteTileAttributeList.Road);
+    }
+    
     public void OnClickDeleteGimmickTile()
     {
         EventManager<TileEvent>.TriggerEvent(TileEvent.DeleteTIleAttribute, DeleteTileAttributeList.Gimmick);
     }
 
-    public void OnClickDeleteRoadTIle()
-    {
-        EventManager<TileEvent>.TriggerEvent(TileEvent.DeleteTIleAttribute, DeleteTileAttributeList.Road);
-    }
     public void OnClickDeleteTIleAll()
     {
         // EventManager<TileEvent>.TriggerEvent(TileEvent.DeleteTIleAttribute, DeleteTileAttributeList.All);

@@ -180,7 +180,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Road_Corner
+      name: Road_L
       rect:
         serializedVersion: 2
         x: 90
@@ -232,9 +232,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Road_Corner: 1210937206
       Road_Cross: -1446428360
       Road_End: -1493912242
+      Road_L: 1210937206
       Road_Straight: -2062186635
       Road_T: 33532268
       Road_end: -1955178436

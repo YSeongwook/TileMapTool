@@ -20,8 +20,9 @@ public class MapGenerator : Singleton<MapGenerator>
 
     private RectTransform _rectTransform;
     private bool _isMapCreated; // 맵 생성 여부를 추적하는 플래그 변수
+    public bool IsLoaded { get; set; }
 
-    public int PreviousSize { get; private set; } = 0; // 초기값을 0으로 설정하여 맵이 없는 상태를 표시
+    public int PreviousSize { get; set; } = 0; // 초기값을 0으로 설정하여 맵이 없는 상태를 표시
 
     protected override void Awake()
     {
@@ -70,9 +71,9 @@ public class MapGenerator : Singleton<MapGenerator>
 
     private void DestroyAllChildren()
     {
-        if (!_isMapCreated)
+        // Todo: Load 조건 추가
+        if (!_isMapCreated && !IsLoaded)
         {
-            // 최초 맵 생성 전에 로그를 출력하지 않음
             return;
         }
 
@@ -157,7 +158,9 @@ public class MapGenerator : Singleton<MapGenerator>
 
     public void SetTileList(List<Tile> tileList)
     {
+        IsLoaded = true;
         int tileCount = tileList.Count;
+        PreviousSize = tileCount;
 
         DestroyAllChildren();
 

@@ -1,4 +1,3 @@
-using System;
 using EnumTypes;
 using EventLibrary;
 using UnityEngine;
@@ -173,8 +172,8 @@ public class TileNode : MonoBehaviour
                 break;
         }
 
-        if (!_imageRoad.enabled && !_imageGimmick.enabled)
-            _background.enabled = false;
+        // 로드 타일, 기믹 타일 전부 비활성화 시 배경 타일 이미지도 비활성화
+        // if (!_imageRoad.enabled && !_imageGimmick.enabled) _background.enabled = false;
     }
 
     public void LoadTileInfo(Tile tileInfo, Sprite roadSprite, Sprite gimmickSprite)

@@ -96,7 +96,7 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         _tileNodes = MapGenerator.GetTileList();
 
         //JsonSaveLoader에게 데이터 전달
-        EventManager<TileEvent>.TriggerEvent(TileEvent.JsonSaveData, _tileNodes);
+        if(_tileNodes != null) EventManager<TileEvent>.TriggerEvent(TileEvent.JsonSaveData, _tileNodes);
     }
 
     private void LoadTileData()
@@ -104,6 +104,6 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         //JsonSaveLoader에게 데이터 받아옴
         _tileNodes = JsonSaveLoader.LoadJsonFile();
 
-        EventManager<TileEvent>.TriggerEvent(TileEvent.JsonLoadData, _tileNodes);
+        if(_tileNodes != null) EventManager<TileEvent>.TriggerEvent(TileEvent.JsonLoadData, _tileNodes);
     }
 }

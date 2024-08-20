@@ -40,6 +40,13 @@ public class JsonSaveLoader : MonoBehaviour
     {
         try
         {
+            // 타일 리스트가 비어 있는지 확인
+            if (tileList == null || tileList.Count == 0)
+            {
+                EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "타일 맵이 없습니다. 저장할 수 없습니다.");
+                return;
+            }
+
             // InputField에서 입력한 파일 이름을 가져옵니다.
             string fileName = fileNameInputField.text;
 
@@ -48,7 +55,6 @@ public class JsonSaveLoader : MonoBehaviour
             {
                 // 팝업 발생
                 EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "파일 이름이 입력되지 않았습니다.");
-
                 return;
             }
 
@@ -61,7 +67,6 @@ public class JsonSaveLoader : MonoBehaviour
             {
                 // 팝업 발생
                 EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "잘못된 파일 이름입니다.");
-
                 return;
             }
 
@@ -121,14 +126,14 @@ public class JsonSaveLoader : MonoBehaviour
             fileNameInputField.text = fileName;
 
             // 로드된 데이터 출력
-            EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "JSON 파일이 로드되었습니다: " + filePath);
+            EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, $"{fileName}.JSON이 로드되었습니다");
 
             // 데이터 반환
             return tilesData;   
         }
         else
         {
-            EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "파일을 찾을 수 없습니다: " + filePath);
+            EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, $"{fileName}.json을 찾을 수 없습니다");
             return null;
         }
     }
