@@ -15,6 +15,7 @@ public class DeleteTileAttribute : MonoBehaviour
     }
     public void OnClickDeleteTIleAll()
     {
-        EventManager<TileEvent>.TriggerEvent(TileEvent.DeleteTIleAttribute, DeleteTileAttributeList.All);
+        // EventManager<TileEvent>.TriggerEvent(TileEvent.DeleteTIleAttribute, DeleteTileAttributeList.All);
+        EventManager<DeleteTileAttributeList>.TriggerEvent(DeleteTileAttributeList.All, MapGenerator.Instance.PreviousSize);
     }
 }

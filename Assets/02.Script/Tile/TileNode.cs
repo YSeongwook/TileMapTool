@@ -31,22 +31,17 @@ public struct Tile
 
 public class TileNode : MonoBehaviour
 {
-    public int instanID;
-    
-     private Tile _tile;
+    private Tile _tile;
     public Tile GetTileInfo {  get { return _tile; } }
 
     private Image _background;
     private Image _imageRoad;
     private Image _imageGimmick;
     private RectTransform _rectTransform;
-
     private RectTransform _imageRoadRectTransform;
     private RectTransform _imageGimmickRectTransform;
-
     private Outline _backgroundOutline;
-
-    private bool isLoad;
+    private bool _isLoad;
 
     private void Awake()
     {
@@ -58,8 +53,6 @@ public class TileNode : MonoBehaviour
 
         _imageRoadRectTransform = _imageRoad.GetComponent<RectTransform>();
         _imageGimmickRectTransform = _imageGimmick.GetComponent<RectTransform>();
-
-        instanID = GetInstanceID();
     }
 
     private void Start()
@@ -73,9 +66,9 @@ public class TileNode : MonoBehaviour
 
         _backgroundOutline.enabled = false;
 
-        if (isLoad)
+        if (_isLoad)
         {
-            isLoad = false;
+            _isLoad = false;
             return;
         }
 
@@ -175,7 +168,7 @@ public class TileNode : MonoBehaviour
 
     public void LoadTileInfo(Tile tileInfo, Sprite Roadsprite, Sprite GimmickSprite)
     {
-        isLoad = true;
+        _isLoad = true;
 
         _tile = tileInfo;
 
