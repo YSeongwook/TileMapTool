@@ -262,8 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileSprite: {fileID: 21300000, guid: 3dec449aa209c6b4aa0cd25544723e9b, type: 3}
-  gimmickType: 1
-  tileShape: 0
+  gimmickShape: 0
 --- !u!1 &6289663051991641268
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,8 +358,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

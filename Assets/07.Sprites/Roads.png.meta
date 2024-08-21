@@ -204,8 +204,8 @@ TextureImporter:
       name: Road_End
       rect:
         serializedVersion: 2
-        x: 97
-        y: 85
+        x: 96
+        y: 73
         width: 64
         height: 64
       alignment: 0
@@ -217,6 +217,27 @@ TextureImporter:
       bones: []
       spriteID: c9c3963f205a46840874f3650db02f3f
       internalID: -1493912242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Roads_Start
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 84
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ed0c18a3669ad848a2a90f1837473c9
+      internalID: 1066858676
       vertices: []
       indices: 
       edges: []
@@ -238,6 +259,7 @@ TextureImporter:
       Road_Straight: -2062186635
       Road_T: 33532268
       Road_end: -1955178436
+      Roads_Start: 1066858676
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
