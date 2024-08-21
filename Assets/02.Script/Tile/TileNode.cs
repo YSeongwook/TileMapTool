@@ -239,7 +239,7 @@ public class TileNode : MonoBehaviour
             {
                 _imageRoad.enabled = true;
                 _imageRoad.sprite = roadSprite;
-                ChangedRoadTileRotate(tileInfo.RotateValue);
+                ChangedRoadTileRotate(tileInfo.RotateValue); // 이 메서드에 의해서 타일 맵 로드시 타일이 회전되는 듯
             }
             else
             {
