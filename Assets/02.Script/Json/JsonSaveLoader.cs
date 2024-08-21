@@ -12,7 +12,7 @@ public class JsonSaveLoader : MonoBehaviour
     public TMP_InputField fileNameInputField; // 파일 이름을 입력받는 InputField
     public string saveDirectory = "C:/Download/TileMap"; // 저장할 디렉터리 경로
 
-    private List<Tile> saveTileList;
+    private List<Tile> _saveTileList;
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class JsonSaveLoader : MonoBehaviour
     }
 
     // JSON 파일을 저장하는 함수
-    public void SaveJsonFile(List<Tile> tileList)
+    private void SaveJsonFile(List<Tile> tileList)
     {
         try
         {
@@ -70,7 +70,7 @@ public class JsonSaveLoader : MonoBehaviour
                 return;
             }
 
-            saveTileList = tileList;
+            _saveTileList = tileList;
 
             // 저장하시겠습니까 팝업 발생
             EventManager<UIEvents>.TriggerEvent(UIEvents.SavePopUp);
@@ -82,10 +82,10 @@ public class JsonSaveLoader : MonoBehaviour
         }
     }
 
-    public void SaveSuccess()
+    private void SaveSuccess()
     {
         // 리스트를 JSON으로 변환합니다.
-        string json = JsonConvert.SerializeObject(saveTileList, Formatting.Indented);
+        string json = JsonConvert.SerializeObject(_saveTileList, Formatting.Indented);
 
         // 사용자 지정 경로에 파일 경로를 설정합니다.
         string filePath = Path.Combine(saveDirectory, fileNameInputField.text + ".json");
@@ -137,6 +137,10 @@ public class JsonSaveLoader : MonoBehaviour
             return null;
         }
     }
+    
+    // Todo: 맵 유효성 검사
+    // 출발점과 도착점이 최소 1개씩 존재해야함
+    // 출발점과 도착점이 연결되는 경로가 최소 1개 존재해야함
 }
 
 // 테스트용 데이터 클래스

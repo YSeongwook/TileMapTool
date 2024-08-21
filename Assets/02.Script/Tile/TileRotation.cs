@@ -5,22 +5,20 @@ using UnityEngine;
 public class TileRotation : MonoBehaviour
 {
     private int _rotateValue = 0;
-    private bool _isGimmickTile;
 
     private void Awake()
     {
-        EventManager<TileEvent>.StartListening<int, int>(TileEvent.GetTileRotateValue, GetSelectTileRotate);
+        EventManager<TileEvent>.StartListening<int>(TileEvent.GetTileRotateValue, GetSelectTileRotate);
     }
 
     private void OnDestroy()
     {
-        EventManager<TileEvent>.StopListening<int, int>(TileEvent.GetTileRotateValue, GetSelectTileRotate);
+        EventManager<TileEvent>.StopListening<int>(TileEvent.GetTileRotateValue, GetSelectTileRotate);
     }
 
-    private void GetSelectTileRotate(int roadRotateValue, int gimmickRotateValue)
+    private void GetSelectTileRotate(int rotateValue)
     {
-        _rotateValue = _isGimmickTile ? gimmickRotateValue : roadRotateValue;
-        _isGimmickTile = (gimmickRotateValue != -1); // 기믹 타일인지 여부를 판단
+        _rotateValue = rotateValue;
     }
 
     public void OnClickLeftRotate()
@@ -29,7 +27,7 @@ public class TileRotation : MonoBehaviour
         if (PuzzleMapData.Instance._selectTile != null)
         {
             _rotateValue = (_rotateValue + 3) % 4; // 왼쪽으로 90도 회전 (270도 회전)
-            EventManager<TileEvent>.TriggerEvent<int, bool>(TileEvent.RotationSelectTileNodeInfo, _rotateValue, _isGimmickTile);
+            EventManager<TileEvent>.TriggerEvent(TileEvent.RotationSelectTileNodeInfo, _rotateValue);
         }
     }
 
@@ -39,7 +37,7 @@ public class TileRotation : MonoBehaviour
         if (PuzzleMapData.Instance._selectTile != null)
         {
             _rotateValue = (_rotateValue + 1) % 4; // 오른쪽으로 90도 회전
-            EventManager<TileEvent>.TriggerEvent<int, bool>(TileEvent.RotationSelectTileNodeInfo, _rotateValue, _isGimmickTile);
+            EventManager<TileEvent>.TriggerEvent(TileEvent.RotationSelectTileNodeInfo, _rotateValue);
         }
     }
 }

@@ -27,7 +27,7 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
     {
         EventManager<TileEvent>.StartListening<TileNode>(TileEvent.SelectTileNode, OnClickSelectTile);
         EventManager<TileEvent>.StartListening<Tile, Sprite, Sprite>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
-        EventManager<TileEvent>.StartListening<int, bool>(TileEvent.RotationSelectTileNodeInfo, RotationSelectTile);
+        EventManager<TileEvent>.StartListening<int>(TileEvent.RotationSelectTileNodeInfo, RotationSelectTile);
         EventManager<TileEvent>.StartListening<DeleteTileAttributeList>(TileEvent.DeleteTIleAttribute, DeleteGimmickTile);
         EventManager<TileEvent>.StartListening(TileEvent.SaveData, SaveTileData);
         EventManager<TileEvent>.StartListening(TileEvent.LoadData, LoadTileData);
@@ -37,7 +37,7 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
     {
         EventManager<TileEvent>.StopListening<TileNode>(TileEvent.SelectTileNode, OnClickSelectTile);
         EventManager<TileEvent>.StopListening<Tile, Sprite, Sprite>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
-        EventManager<TileEvent>.StopListening<int, bool>(TileEvent.RotationSelectTileNodeInfo, RotationSelectTile);
+        EventManager<TileEvent>.StopListening<int>(TileEvent.RotationSelectTileNodeInfo, RotationSelectTile);
         EventManager<TileEvent>.StopListening<DeleteTileAttributeList>(TileEvent.DeleteTIleAttribute, DeleteGimmickTile);
         EventManager<TileEvent>.StopListening(TileEvent.SaveData, SaveTileData);
         EventManager<TileEvent>.StopListening(TileEvent.LoadData, LoadTileData);
@@ -74,14 +74,11 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         }
     }
 
-    private void RotationSelectTile(int rotate, bool isGimmick)
+    private void RotationSelectTile(int rotate)
     {
         if (_selectTile == null) return;
 
-        if (isGimmick)
-            _selectTile.ChangedRoadTileRotate(rotate);
-        else
-            _selectTile.ChangedRoadTileRotate(rotate);
+        _selectTile.ChangedRoadTileRotate(rotate);
     }
 
     private void DeleteGimmickTile(DeleteTileAttributeList deleteType)
