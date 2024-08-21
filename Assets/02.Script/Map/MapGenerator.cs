@@ -162,9 +162,8 @@ public class MapGenerator : Singleton<MapGenerator>
         int tileCount = tileList.Count;
         PreviousSize = tileCount;
 
-        DestroyAllChildren();
-
-        LayoutRectTransformChanged(tileCount);
+        DestroyAllChildren(); // 기존 맵 초기화
+        LayoutRectTransformChanged(tileCount); // 맵 크기에 따라 맵 위치 조정
 
         try
         {
@@ -175,6 +174,7 @@ public class MapGenerator : Singleton<MapGenerator>
                 var tile = puzzlePiece.GetComponent<TileNode>();
                 Sprite roadSprite = tileList[i].RoadShape != RoadShape.None ? Road[(int)tileList[i].RoadShape] : null;
                 Sprite gimmickSprite = tileList[i].GimmickShape != GimmickShape.None ? Gimmick[(int)tileList[i].GimmickShape] : null;
+                tile.EnableGimmickImage(tileList[i].GimmickShape != GimmickShape.None ? Gimmick[(int)tileList[i].GimmickShape] : null);
                 tile.LoadTileInfo(tileList[i], roadSprite, gimmickSprite);
             }
         }

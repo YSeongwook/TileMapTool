@@ -33,7 +33,7 @@ public class ChangedGimmickTile : MonoBehaviour
         }
 
         // 길 타일이 있는 경우에만 기믹 타일을 배치
-        Tile newTile = currentTileInfo;
+        Tile newTile = currentTileInfo; // 기존 타일 정보 복사
         newTile.Type = TileType.Gimmick; // 기믹 타일 설정
         newTile.GimmickShape = gimmickShape; // 기믹의 모양 설정
 

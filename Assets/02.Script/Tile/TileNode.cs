@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using EnumTypes;
 using EventLibrary;
 using UnityEngine;
@@ -52,6 +54,11 @@ public class TileNode : MonoBehaviour
     private RectTransform _imageGimmickRectTransform;
     private Outline _backgroundOutline;
     private bool _isLoad;
+    
+    [SerializeField] private float rotationDuration = 1f; // 회전에 걸리는 시간
+    private readonly Queue<int> _rotationQueue = new Queue<int>();
+    private int _currentRotation;
+    private bool _isRotating;
 
     private void Awake()
     {
@@ -97,6 +104,11 @@ public class TileNode : MonoBehaviour
         return _imageGimmick.sprite;
     }
 
+    public void EnableGimmickImage(bool enable)
+    {
+        _imageGimmick.enabled = enable;
+    }
+
     public void OnClickThisNode()
     {
         EventManager<TileEvent>.TriggerEvent(TileEvent.SelectTileNode, this);
@@ -132,12 +144,49 @@ public class TileNode : MonoBehaviour
 
     public void ChangedRoadTileRotate(int rotateValue)
     {
+        // 회전 값을 타일 구조체에 업데이트
         _tile.RotateValue = rotateValue;
-        float rotationAngle = rotateValue * -90f;
 
-        // 길과 기믹 모두 동일한 회전 각도를 적용
-        _imageRoadRectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
-        _imageGimmickRectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
+        // 큐에 회전 명령 추가
+        _rotationQueue.Enqueue(rotateValue);
+
+        // 현재 회전 중이 아니면 큐의 첫 번째 명령을 실행
+        if (!_isRotating)
+        {
+            StartCoroutine(ProcessRotationQueue());
+        }
+    }
+
+    private IEnumerator ProcessRotationQueue()
+    {
+        while (_rotationQueue.Count > 0)
+        {
+            _isRotating = true;
+            _currentRotation = _rotationQueue.Dequeue();
+            float rotationAngle = _currentRotation * -90f;
+            Quaternion targetRotation = Quaternion.Euler(0, 0, rotationAngle);
+
+            yield return StartCoroutine(RotateOverTime(targetRotation, rotationDuration));
+        }
+
+        _isRotating = false;
+    }
+
+    private IEnumerator RotateOverTime(Quaternion endRotation, float duration)
+    {
+        Quaternion startRotation = _imageRoadRectTransform.rotation;
+        float elapsed = 0.0f;
+
+        while (elapsed < duration)
+        {
+            _imageRoadRectTransform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed / duration);
+            _imageGimmickRectTransform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        _imageRoadRectTransform.rotation = endRotation;
+        _imageGimmickRectTransform.rotation = endRotation;
     }
 
     public void DisEnableOutLine()

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TileRotation : MonoBehaviour
 {
-    private int _roadRotateValue = 0;
-    private int _gimmickRotateValue = 0;
+    private int _rotateValue = 0;
     private bool _isGimmickTile;
 
     private void Awake()
@@ -20,36 +19,27 @@ public class TileRotation : MonoBehaviour
 
     private void GetSelectTileRotate(int roadRotateValue, int gimmickRotateValue)
     {
-        this._roadRotateValue = roadRotateValue;
-        this._gimmickRotateValue = gimmickRotateValue;
+        _rotateValue = _isGimmickTile ? gimmickRotateValue : roadRotateValue;
         _isGimmickTile = (gimmickRotateValue != -1); // 기믹 타일인지 여부를 판단
-    }
-
-    public void OnClickRightRotate()
-    {
-        if (_isGimmickTile)
-        {
-            _gimmickRotateValue = (_gimmickRotateValue + 1) % 4;
-            _roadRotateValue = _gimmickRotateValue; // 길도 함께 회전
-        }
-        else
-        {
-            _roadRotateValue = (_roadRotateValue + 1) % 4;
-        }
-        EventManager<TileEvent>.TriggerEvent<int, bool>(TileEvent.RotationSelectTileNodeInfo, _roadRotateValue, _isGimmickTile);
     }
 
     public void OnClickLeftRotate()
     {
-        if (_isGimmickTile)
+        // 현재 선택된 타일을 PuzzleMapData.Instance._selectTile로 참조
+        if (PuzzleMapData.Instance._selectTile != null)
         {
-            _gimmickRotateValue = (_gimmickRotateValue + 3) % 4;
-            _roadRotateValue = _gimmickRotateValue; // 길도 함께 회전
+            _rotateValue = (_rotateValue + 3) % 4; // 왼쪽으로 90도 회전 (270도 회전)
+            EventManager<TileEvent>.TriggerEvent<int, bool>(TileEvent.RotationSelectTileNodeInfo, _rotateValue, _isGimmickTile);
         }
-        else
+    }
+
+    public void OnClickRightRotate()
+    {
+        // 현재 선택된 타일을 PuzzleMapData.Instance._selectTile로 참조
+        if (PuzzleMapData.Instance._selectTile != null)
         {
-            _roadRotateValue = (_roadRotateValue + 3) % 4;
+            _rotateValue = (_rotateValue + 1) % 4; // 오른쪽으로 90도 회전
+            EventManager<TileEvent>.TriggerEvent<int, bool>(TileEvent.RotationSelectTileNodeInfo, _rotateValue, _isGimmickTile);
         }
-        EventManager<TileEvent>.TriggerEvent<int, bool>(TileEvent.RotationSelectTileNodeInfo, _roadRotateValue, _isGimmickTile);
     }
 }
