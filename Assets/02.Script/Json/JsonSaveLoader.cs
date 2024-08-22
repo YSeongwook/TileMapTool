@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using EnumTypes;
 using EventLibrary;
 using Newtonsoft.Json;
@@ -120,7 +121,7 @@ public class JsonSaveLoader : MonoBehaviour
 
             // MapID 생성 (파일 이름의 앞부분을 기반으로 함)
             string[] fileNameParts = fileNameInputField.text.Split('-');
-            string mapID = $"M{fileNameParts[0]}{fileNameParts[1].PadLeft(2, '0')}";
+            string mapID = $"M{fileNameParts[0]}{fileNameParts[1].PadLeft(3, '0')}";
 
             // 제한 횟수를 저장할 데이터 구조
             var limitData = new Dictionary<string, object>
@@ -139,6 +140,12 @@ public class JsonSaveLoader : MonoBehaviour
             {
                 _limitCountTable.Add(mapID, limitData);
             }
+
+            // MapID를 기준으로 내림차순 정렬
+            var sortedTable = _limitCountTable.OrderBy(kv => kv.Key).ToDictionary(kv => kv.Key, kv => kv.Value);
+
+            // 정렬된 테이블로 원래 테이블 덮어쓰기
+            _limitCountTable = sortedTable;
 
             // LimitCountTable.json 파일 저장
             SaveLimitCountTable();
@@ -211,7 +218,7 @@ public class JsonSaveLoader : MonoBehaviour
         }
     }
 
-// 제한 횟수 불러오기 기능
+    // 제한 횟수 불러오기 기능
     private void LoadLimitCount(string fileName)
     {
         string limitCountFilePath = Path.Combine(saveDirectory, "LimitCountTable.json");
@@ -226,7 +233,7 @@ public class JsonSaveLoader : MonoBehaviour
 
             // MapID 생성 (파일 이름의 앞부분을 기반으로 함)
             string[] fileNameParts = fileName.Split('-');
-            string mapID = $"M{fileNameParts[0]}{fileNameParts[1].PadLeft(2, '0')}";
+            string mapID = $"M{fileNameParts[0]}{fileNameParts[1].PadLeft(3, '0')}";
 
             // 해당 MapID가 LimitCountTable에 존재하는지 확인하고, 존재하면 제한 횟수 값을 가져오기
             if (limitCountTable.TryGetValue(mapID, out var limitData) &&
