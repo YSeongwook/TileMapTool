@@ -10,6 +10,7 @@ using UnityEngine;
 public class JsonSaveLoader : MonoBehaviour
 {
     public TMP_InputField fileNameInputField; // 파일 이름을 입력받는 InputField
+    public TMP_InputField limitCountInputField; // 제한 횟수를 입력받는 InputField
     public string saveDirectory = "C:/Download/TileMap"; // 저장할 디렉터리 경로
 
     private List<Tile> _saveTileList;
@@ -35,7 +36,7 @@ public class JsonSaveLoader : MonoBehaviour
         EventManager<DataEvents>.StopListening(DataEvents.TileSave, SaveSuccess);
     }
 
-    // JSON 파일을 저장하는 함수
+    // 타일 맵 JSON 파일을 저장
     private void SaveJsonFile(List<Tile> tileList)
     {
         try
@@ -82,6 +83,8 @@ public class JsonSaveLoader : MonoBehaviour
         }
     }
 
+    
+    
     private void SaveSuccess()
     {
         // 리스트를 JSON으로 변환합니다.
@@ -138,15 +141,8 @@ public class JsonSaveLoader : MonoBehaviour
         }
     }
     
-    // Todo: 맵 유효성 검사
-    // 출발점과 도착점이 최소 1개씩 존재해야함
-    // 출발점과 도착점이 연결되는 경로가 최소 1개 존재해야함
-}
-
-// 테스트용 데이터 클래스
-[Serializable]
-public class TestData
-{
-    public string message; // 예시 메시지
-    public int number; // 예시 숫자
+    // Todo: 별도의 파일로 제한 횟수를 저장
+    // 제한 횟수 파일의 Key는 MapID, FileName, LimitCount
+    // 저장 시 새로운 파일이 생성되는 것이 아니라 기존 파일을 수정
+    // 파일 없을 시 새 파일 생성
 }
