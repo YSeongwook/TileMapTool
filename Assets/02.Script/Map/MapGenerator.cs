@@ -29,13 +29,13 @@ public class MapGenerator : Singleton<MapGenerator>
         base.Awake();
         
         _rectTransform = puzzleMapGrid.GetComponent<RectTransform>();
-        EventManager<TileEvent>.StartListening<List<Tile>>(TileEvent.JsonLoadData, SetTileList);
+        EventManager<JsonEvent>.StartListening<List<Tile>>(JsonEvent.JsonLoadData, SetTileList);
         EventManager<DeleteTileAttributeList>.StartListening<int>(DeleteTileAttributeList.All, OnDeleteAllTiles);
     }
 
     private void OnDestroy()
     {
-        EventManager<TileEvent>.StopListening<List<Tile>>(TileEvent.JsonLoadData, SetTileList);
+        EventManager<JsonEvent>.StopListening<List<Tile>>(JsonEvent.JsonLoadData, SetTileList);
         EventManager<DeleteTileAttributeList>.StopListening<int>(DeleteTileAttributeList.All, OnDeleteAllTiles);
     }
 

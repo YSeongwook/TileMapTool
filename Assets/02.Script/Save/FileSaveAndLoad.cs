@@ -6,11 +6,11 @@ public class FileSaveAndLoad : MonoBehaviour
 {
     public void OnClickSaveButton()
     {
-        EventManager<TileEvent>.TriggerEvent(TileEvent.SaveData);
+        EventManager<JsonEvent>.TriggerEvent(JsonEvent.SaveData);
     }
 
     public void OnClickLoadButton()
     {
-        EventManager<TileEvent>.TriggerEvent(TileEvent.LoadData);
+        EventManager<JsonEvent>.TriggerEvent(JsonEvent.LoadData);
     }
 }

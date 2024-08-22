@@ -29,8 +29,8 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         EventManager<TileEvent>.StartListening<Tile, Sprite, Sprite>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
         EventManager<TileEvent>.StartListening<int>(TileEvent.RotationSelectTileNodeInfo, RotationSelectTile);
         EventManager<TileEvent>.StartListening<DeleteTileAttributeList>(TileEvent.DeleteTIleAttribute, DeleteGimmickTile);
-        EventManager<TileEvent>.StartListening(TileEvent.SaveData, SaveTileData);
-        EventManager<TileEvent>.StartListening(TileEvent.LoadData, LoadTileData);
+        EventManager<JsonEvent>.StartListening(JsonEvent.SaveData, SaveTileData);
+        EventManager<JsonEvent>.StartListening(JsonEvent.LoadData, LoadTileData);
     }
 
     private void RemoveEvents()
@@ -39,8 +39,8 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         EventManager<TileEvent>.StopListening<Tile, Sprite, Sprite>(TileEvent.ChangedSelectTileInfo, ChangedSelectTileInfo);
         EventManager<TileEvent>.StopListening<int>(TileEvent.RotationSelectTileNodeInfo, RotationSelectTile);
         EventManager<TileEvent>.StopListening<DeleteTileAttributeList>(TileEvent.DeleteTIleAttribute, DeleteGimmickTile);
-        EventManager<TileEvent>.StopListening(TileEvent.SaveData, SaveTileData);
-        EventManager<TileEvent>.StopListening(TileEvent.LoadData, LoadTileData);
+        EventManager<JsonEvent>.StopListening(JsonEvent.SaveData, SaveTileData);
+        EventManager<JsonEvent>.StopListening(JsonEvent.LoadData, LoadTileData);
     }
 
     private void OnClickSelectTile(TileNode tileNode)
@@ -93,7 +93,7 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         _tileNodes = MapGenerator.GetTileList();
 
         //JsonSaveLoader에게 데이터 전달
-        if(_tileNodes != null) EventManager<TileEvent>.TriggerEvent(TileEvent.JsonSaveData, _tileNodes);
+        if(_tileNodes != null) EventManager<JsonEvent>.TriggerEvent(JsonEvent.JsonSaveData, _tileNodes);
     }
 
     private void LoadTileData()
@@ -101,6 +101,6 @@ public class PuzzleMapData : Singleton<PuzzleMapData>
         //JsonSaveLoader에게 데이터 받아옴
         _tileNodes = JsonSaveLoader.LoadJsonFile();
 
-        if(_tileNodes != null) EventManager<TileEvent>.TriggerEvent(TileEvent.JsonLoadData, _tileNodes);
+        if(_tileNodes != null) EventManager<JsonEvent>.TriggerEvent(JsonEvent.JsonLoadData, _tileNodes);
     }
 }

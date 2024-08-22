@@ -41,6 +41,10 @@ namespace EnumTypes
         RotationSelectTileNodeInfo,
         GetTileRotateValue,
         DeleteTIleAttribute,
+    }
+
+    public enum JsonEvent
+    {
         SaveData,
         JsonSaveData,
         LoadData,
