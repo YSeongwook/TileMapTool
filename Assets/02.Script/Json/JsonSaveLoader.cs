@@ -99,11 +99,26 @@ public class JsonSaveLoader : MonoBehaviour
 
             // 저장하시겠습니까 팝업 발생
             EventManager<UIEvents>.TriggerEvent(UIEvents.SavePopUp);
+
+            string MapID = fileName;
+            int LimitCount = limitCount;
+            // DB에 저장
+            MySQLDBManager.Instance.ParsingListDataToDB(tileList, MapID, LimitCount);
         }
         catch (Exception e)
         {
-            Debug.LogError(e.Message);
-            EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "JSON 파일 저장 중 오류가 발생했습니다: " + e.Message);
+            //Debug.LogError(e.Message);
+            //EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "JSON 파일 저장 중 오류가 발생했습니다: " + e.Message);
+            if (e.Message.Contains("MySqlPoolManager"))
+            {
+                // 오류 무시하고 로깅만
+                Debug.LogWarning("MySqlPoolManager 관련 오류가 발생했지만 무시합니다: " + e.Message);
+            }
+            else
+            {
+                Debug.LogError(e.Message);
+                EventManager<UIEvents>.TriggerEvent(UIEvents.ErrorPopUP, "JSON 파일 저장 중 오류가 발생했습니다: " + e.Message);
+            }
         }
     }
 
