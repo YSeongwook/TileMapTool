@@ -161,7 +161,8 @@ public class MySQLDBManager : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.LogError("Invalid query type provided.");
+                        //Debug.LogError("Invalid query type provided.");
+                        Debug.Log("InsertData called with type: " + type);
                         return;
                 }
 
@@ -206,7 +207,7 @@ public class MySQLDBManager : MonoBehaviour
                 cmd.ExecuteNonQuery();
 
                 // 최초 로그인시 DBDataManager에 Dictionary 데이터 저장
-                InputDataAtDictionary(type, str);
+                //InputDataAtDictionary(type, str);
 
                 Debug.Log("Data Inserted Successfully");
             }
