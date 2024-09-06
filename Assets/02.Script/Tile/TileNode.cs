@@ -29,8 +29,9 @@ public enum RoadShape
 public enum GimmickShape
 {
     None,
-    Gimmick1,
-    Gimmick2
+    Warp,
+    Link,
+    Fog,
 }
 
 public struct Tile
