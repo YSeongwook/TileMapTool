@@ -2311,6 +2311,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 375280608}
     m_Modifications:
+    - target: {fileID: 1317169181695639505, guid: 6228263243a454b4e8c2a9e72ae7fafa, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1622877990199349139, guid: 6228263243a454b4e8c2a9e72ae7fafa, type: 3}
       propertyPath: tileShape
       value: 1
@@ -2318,14 +2322,14 @@ PrefabInstance:
     - target: {fileID: 1622877990199349139, guid: 6228263243a454b4e8c2a9e72ae7fafa, type: 3}
       propertyPath: tileSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 034fd6be32ed97d4dbac7ab421662074, type: 3}
+      objectReference: {fileID: 21300000, guid: a34c1d4c598cf7041b22d3cc33b86bb1, type: 3}
     - target: {fileID: 1622877990199349139, guid: 6228263243a454b4e8c2a9e72ae7fafa, type: 3}
       propertyPath: gimmickType
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1622877990199349139, guid: 6228263243a454b4e8c2a9e72ae7fafa, type: 3}
       propertyPath: gimmickShape
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2042298994347978220, guid: 6228263243a454b4e8c2a9e72ae7fafa, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2417,11 +2421,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4190980160682118139, guid: 6228263243a454b4e8c2a9e72ae7fafa, type: 3}
       propertyPath: m_Name
-      value: TileType_Btn_Fog (1)
+      value: TileType_Btn_Rock
       objectReference: {fileID: 0}
     - target: {fileID: 4464585101119279450, guid: 6228263243a454b4e8c2a9e72ae7fafa, type: 3}
       propertyPath: m_text
-      value: Fog
+      value: Rock
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6228263243a454b4e8c2a9e72ae7fafa, type: 3}

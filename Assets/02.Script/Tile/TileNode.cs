@@ -32,6 +32,7 @@ public enum GimmickShape
     Warp,
     Link,
     Fog,
+    Rock,
 }
 
 public struct Tile
