@@ -12,7 +12,7 @@ public class ChangedGimmickTile : MonoBehaviour
 
     private void Awake()
     {
-        _tileImage = transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        _tileImage = transform.GetChild(0).GetChild(1).GetComponent<Image>();
         _tileImage.sprite = tileSprite;
     }
 
